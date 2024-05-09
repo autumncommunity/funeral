@@ -6,7 +6,7 @@ funeral.author = {"smokingplaya"}
 */
 
 funeral.loader = {}
-funeral.loader.IncludePrefixes = {
+funeral.loader.includes = {
     cl = function(path)
         if CLIENT then
             return include(path)
@@ -32,11 +32,11 @@ funeral.loader.IncludePrefixes = {
 
 function funeral.loader:Include(path)
     local file = path:GetFileFromFilename()
-    local mount = self.IncludePrefixes[file:Left(2)]
+    local mount = self.includes[file:Left(2)]
 
     if not mount then
         logger.Debug("Файл \"" .. file .. "\" будет подключен как shared, т.к у него отсутствует префикс.")
-        return self.IncludePrefixes.sh(path)
+        return self.includes.sh(path)
     end
 
     return mount(path)
@@ -82,12 +82,12 @@ class_mt.__tostring = function(self)
     return "[class " .. self.name .. "]"
 end
 
-function funeral:DefineClasses()
+function funeral:defineClasses()
     local class_folder = "classes/"
     local files = file.Find(class_folder .. "*.lua", "LUA")
 
     for _, filename in ipairs(files) do
-        local class = self.loader.IncludePrefixes.sh(class_folder .. filename)
+        local class = self.loader.includes.sh(class_folder .. filename)
         local class_name = class.name
 
         if !class or !class_name then
@@ -121,14 +121,49 @@ function funeral:DefineClasses()
     end
 end
 
-function funeral:DefineLibraries()
-  local libraries_folder = "libraries/"
-  local files = file.Find(libraries_folder .. "*.lua", "LUA")
+function funeral:defineLibraries()
+    local libraries_folder = "libraries/"
+    local files = file.Find(libraries_folder .. "*.lua", "LUA")
 
-  for _, filename in ipairs(files) do
-    funeral.loader.IncludePrefixes.sh(libraries_folder .. filename)
-  end
+    for _, filename in ipairs(files) do
+        funeral.loader.includes.sh(libraries_folder .. filename)
+    end
 end
 
-funeral:DefineClasses()
-funeral:DefineLibraries()
+function funeral:loadSystems()
+    local systems_folder = "systems/"
+    local _, system = file.Find(systems_folder + "*", "LUA")
+
+    foreach(system, function(name)
+        funeral[name] = {}
+
+        local system_path = systems_folder + name + "/"
+        local init_file = system_path + "/init.lua"
+
+        if not file.Exists(init_file, "LUA") then
+            return logger.Error("System \"" + name + "\" haven't init.lua file!")
+        end
+
+        include(init_file)
+
+        if not funeral[name].include then
+            return logger.Warning("System \"" + name + "\" doesn't include anything!")
+        end
+
+        logger.Info("Including system \"" + name + "\"")
+
+        foreach(funeral[name].include, function(file_name)
+            local current_path = system_path + file_name
+
+            if not file.Exists(current_path, "LUA") then
+                return logger.Error("System \"" + name + "\" tried to include non-exist file \"" + current_path + "\"")
+            end
+
+            funeral.loader:Include(current_path)
+        end)
+    end)
+end
+
+funeral:defineClasses()
+funeral:defineLibraries()
+funeral:loadSystems()
