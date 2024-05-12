@@ -1,10 +1,19 @@
 str = tostring
 
+/**
+  * foreach
+  * ? Перебирает все элементы последовательно-пронумерованной таблицы
+  * @param tab - Таблица с элементами для перебора
+  * @param callback - Функция, вызывающаяся при каждой итерации
+*/
+
 function foreach(tab, callback)
     for k, v in ipairs(tab) do
         callback(v, k)
     end
 end
+
+foreach()
 
 function dump(...)
     for _, v in ipairs({...}) do

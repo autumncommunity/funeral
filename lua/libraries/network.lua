@@ -1,5 +1,5 @@
 --
--- **Network Lib**
+-- Network Lib
 -- * Author: smokingplaya
 -- ? Network Lib - абстрация над обычной библиотекой net в Garry's Mod
 --
