@@ -138,10 +138,14 @@ function funeral:loadSystems()
         funeral[name] = {}
 
         local system_path = systems_folder + name + "/"
-        local init_file = system_path + "/init.lua"
+        local init_file = system_path + "init.lua"
 
         if not file.Exists(init_file, "LUA") then
             return logger.Error("System \"" + name + "\" haven't init.lua file!")
+        end
+
+        if SERVER then
+            AddCSLuaFile(init_file)
         end
 
         include(init_file)

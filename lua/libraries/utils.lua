@@ -13,8 +13,6 @@ function foreach(tab, callback)
     end
 end
 
-foreach()
-
 function dump(...)
     for _, v in ipairs({...}) do
         _G[type(v) == "table" and "PrintTable" or "print"](v)

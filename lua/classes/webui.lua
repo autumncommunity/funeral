@@ -34,7 +34,7 @@ function class:Open(parent)
 
     self.panel = vgui.Create("DHTML", parent)
     self.panel:Dock(FILL)
-    self.panel:SetURL(self.url)
+    self.panel:OpenURL(self.url)
 end
 
 /**
@@ -45,6 +45,24 @@ end
 
 function class:GetPanel()
     return self.panel
+end
+
+/**
+    * PushTable
+    * * Добавляет переменную в JS, которая будет являться таблицей
+    * @param variable_name - название переменной в JS
+    * @param tab - таблица, которяа будет добавлена в JS
+*/
+
+function class:PushTable(variable_name, tab)
+    if not IsValid(self.panel) then
+        return
+    end
+
+    /* я не придумал другого метода, как можно пушить таблицу в js */
+    local code = "var " .. variable_name .. " = " .. util.TableToJSON(tab)
+
+    self.panel:QueueJavascript(code)
 end
 
 /**
