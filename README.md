@@ -1,7 +1,7 @@
 <h1 align="center">
     <img src="images/logo.png">
 
-    Funeral 💜
+Funeral 💜
 </h1>
 
 ## Information
