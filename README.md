@@ -1,14 +1,18 @@
-# Funeral
-### WORK IN PROCESS
+<h1 align="center">
+    <img src="images/logo.png">
 
-Funeral - Open-Source Garry's Mod Lua библиотека,
-созданная для упрощения разработки систем путём
-абстракций (это же все таки библиотека).
+    Funeral 💜
+</h1>
 
-# Рекомендованные практики
+## Information
+Will be write soon
 
-1.1 - Для каждой функции/метода нужно писать комментарии.
+## Documentation
+Documentation will be available soon [here](https://autumngmod.ru/funeral/docs)
 
-1.2 - Использовать VSCode в качестве среды для разработки аддонов.
+# Guidelines
+Will be write soon
 
-1.2.1 - Использовать рекомендованные плагины (extensions) для VSCode
+# Contributing
+Feel free to submit a pull request with your changes/fixes,
+but keep in mind that your changes should be in line with our [code writing guidelines].

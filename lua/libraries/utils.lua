@@ -13,6 +13,11 @@ function foreach(tab, callback)
     end
 end
 
+/**
+  * dump
+  * ? Принтит в консоль значения которые вы в нее запихнете
+  * @param vararg - значения, которые будут принтиться
+*/
 function dump(...)
     for _, v in ipairs({...}) do
         _G[type(v) == "table" and "PrintTable" or "print"](v)
