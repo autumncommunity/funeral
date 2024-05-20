@@ -4,6 +4,7 @@
 */
 
 local class = {}
+class.list = {} /* список существующих панелей */
 class.name = "WebUI"
 
 /**
@@ -15,10 +16,41 @@ class.name = "WebUI"
 */
 
 function class:new(name, url, save_on_close)
+    local panel = class.list[name]
+
+    if panel then
+        if IsValid(panel) then
+            panel:Remove()
+        end
+
+        class.list[name] = nil
+    end
+
     self.panel = NULL
     self.name = name
     self.url = url
     self.isSave = save_on_close or false
+end
+
+/**
+    * Prepare (static)
+    * * Возвращает панель если она не существует, либо создает ее и возвращает.
+    * @param name - Ключ конкретного WebUI в таблице со всеми WebUI
+    * @param url - URL-ссылка, которая будет открываться
+    * @param save_on_close? - Будет ли текущий WebUI полностью удалятся при вызове метода Close?
+
+    example:
+        WebUI.Prepare("HUD", "asset://garrysmod/hud.html", false)
+*/
+
+function class.Prepare(name, url, save_on_close)
+    local panel = class.list[name]
+
+    if IsValid(panel) then
+        return panel
+    end
+
+    return _G[class.name]:new(name, url, save_on_close) /* это нужно на случай если class.name кто-то поменяет жи ес */
 end
 
 /**

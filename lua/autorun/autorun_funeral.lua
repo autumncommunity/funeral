@@ -82,7 +82,7 @@ class_mt.__tostring = function(self)
     return "[class " .. self.name .. "]"
 end
 
-function funeral:defineClasses()
+function funeral:DefineClasses()
     local class_folder = "classes/"
     local files = file.Find(class_folder .. "*.lua", "LUA")
 
@@ -121,7 +121,7 @@ function funeral:defineClasses()
     end
 end
 
-function funeral:defineLibraries()
+function funeral:DefineLibraries()
     local libraries_folder = "libraries/"
     local files = file.Find(libraries_folder .. "*.lua", "LUA")
 
@@ -130,7 +130,7 @@ function funeral:defineLibraries()
     end
 end
 
-function funeral:loadSystems()
+function funeral:LoadSystems()
     local systems_folder = "systems/"
     local _, system = file.Find(systems_folder + "*", "LUA")
 
@@ -168,6 +168,6 @@ function funeral:loadSystems()
     end)
 end
 
-funeral:defineClasses()
-funeral:defineLibraries()
-funeral:loadSystems()
+funeral:DefineClasses()
+funeral:DefineLibraries()
+funeral:LoadSystems()
