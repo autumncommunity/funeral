@@ -1,5 +1,14 @@
+/*
+    Funeral is a free open-source Garry's Mod framework
+        for faster addon development.
+
+    coded by smokingplaya for autumngmod.ru 2024
+                                            <3
+*/
+
 funeral = {}
-funeral.author = {"smokingplaya"}
+funeral.authors = {"smokingplaya"}
+funeral.version = "1.0.2"
 
 /**
   * Loader
@@ -42,6 +51,14 @@ function funeral.loader:Include(path)
     return mount(path)
 end
 
+/**
+    * IncludeDir
+    * * Includes all files in specified folder
+    * @param path - A folder relative to /lua/ that you need to include.
+    * @param recursive? - Is including are recursive
+    * @param recursive_count? - Max count of recursive include
+*/
+
 function funeral.loader:IncludeDir(path, recursive, recursive_count)
     local files, folders = file.Find(path .. "/*", "LUA")
 
@@ -71,7 +88,7 @@ function funeral.loader:IncludeDir(path, recursive, recursive_count)
 end
 
 /**
-  * Загрузчик классов
+  * Classes
 */
 
 funeral.classes = {}
@@ -82,12 +99,23 @@ class_mt.__tostring = function(self)
     return "[class " .. self.name .. "]"
 end
 
-function funeral:DefineClasses()
-    local class_folder = "classes/"
+/**
+    * InitializeClasses
+    * * Includes all classes, that "path" folder contains
+    * @param path - A folder relative to /lua/ that should contain classes.
+    * @param side - cl/sh/sv - client/shared/server
+*/
+
+function funeral.loader:InitializeClasses(path, side)
+    local class_folder = path .. "/"
     local files = file.Find(class_folder .. "*.lua", "LUA")
 
+    if not self.includes[side] then
+        return
+    end
+
     for _, filename in ipairs(files) do
-        local class = self.loader.includes.sh(class_folder .. filename)
+        local class = self.includes[side](class_folder .. filename)
         local class_name = class.name
 
         if !class or !class_name then
@@ -101,7 +129,7 @@ function funeral:DefineClasses()
             return "[object " .. class_name .. "]"
         end
 
-        self.classes[class_name] = class
+        funeral.classes[class_name] = class
 
         _G[class_name] = _G[class_name] || {}
 
@@ -121,17 +149,43 @@ function funeral:DefineClasses()
     end
 end
 
-function funeral:DefineLibraries()
-    local libraries_folder = "libraries/"
+funeral.loader:InitializeClasses("classes/client", "cl")
+funeral.loader:InitializeClasses("classes/shared", "sh")
+funeral.loader:InitializeClasses("classes/server", "sv")
+
+/**
+    * InitializeLibraries
+    * * Includes all libraries, that "path" folder contains
+    * @param path - A folder relative to /lua/ that should contain libraries.
+    * @param side - cl/sh/sv - client/shared/server
+*/
+
+function funeral.loader:InitializeLibraries(path, side)
+    local libraries_folder = path .. "/"
     local files = file.Find(libraries_folder .. "*.lua", "LUA")
 
+    if not self.includes[side] then
+        return
+    end
+
     for _, filename in ipairs(files) do
-        funeral.loader.includes.sh(libraries_folder .. filename)
+        funeral.loader.includes[side](libraries_folder .. filename)
     end
 end
 
-function funeral:LoadSystems()
-    local systems_folder = "systems/"
+funeral.loader:InitializeLibraries("libraries/client", "cl")
+funeral.loader:InitializeLibraries("libraries/shared", "sh")
+funeral.loader:InitializeLibraries("libraries/server", "sv")
+
+/**
+    * InitializeSystems
+    * * Includes all systems, that "path" folder contains
+    * @param path - A folder relative to /lua/ that should contain systems.
+    * @param side - cl/sh/sv - client/shared/server
+*/
+
+function funeral.loader:InitializeSystems(path)
+    local systems_folder = path .. "/"
     local _, system = file.Find(systems_folder + "*", "LUA")
 
     foreach(system, function(name)
@@ -168,6 +222,4 @@ function funeral:LoadSystems()
     end)
 end
 
-funeral:DefineClasses()
-funeral:DefineLibraries()
-funeral:LoadSystems()
+funeral.loader:InitializeSystems("systems")

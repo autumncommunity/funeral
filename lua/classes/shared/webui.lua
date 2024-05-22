@@ -4,6 +4,7 @@
 */
 
 local class = {}
+class.static = {}
 class.list = {} /* список существующих панелей */
 class.name = "WebUI"
 
@@ -43,7 +44,7 @@ end
         WebUI.Prepare("HUD", "asset://garrysmod/hud.html", false)
 */
 
-function class.Prepare(name, url, save_on_close)
+function class.static.Prepare(name, url, save_on_close)
     local panel = class.list[name]
 
     if IsValid(panel) then
