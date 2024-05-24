@@ -8,7 +8,7 @@
 
 funeral = {}
 funeral.authors = {"smokingplaya"}
-funeral.version = "1.0.2"
+funeral.version = "1.0.3"
 
 /**
   * Loader
@@ -37,6 +37,12 @@ funeral.loader.includes = {
 
         return include(path)
     end,
+}
+
+funeral.sides = {
+    CLIENT = "cl",
+    SHARED = "sh",
+    SERVER = "sv"
 }
 
 function funeral.loader:Include(path)
@@ -133,6 +139,12 @@ function funeral.loader:InitializeClasses(path, side)
 
         _G[class_name] = _G[class_name] || {}
 
+        if class.static then
+            for k, v in pairs(class.static) do
+                _G[class_name][k] = v
+            end
+        end
+
         _G[class_name]["new"] = function(_, ...)
             local object = setmetatable({}, class)
 
@@ -149,9 +161,9 @@ function funeral.loader:InitializeClasses(path, side)
     end
 end
 
-funeral.loader:InitializeClasses("classes/client", "cl")
-funeral.loader:InitializeClasses("classes/shared", "sh")
-funeral.loader:InitializeClasses("classes/server", "sv")
+funeral.loader:InitializeClasses("classes/client", funeral.sides.CLIENT)
+funeral.loader:InitializeClasses("classes/shared", funeral.sides.SHARED)
+funeral.loader:InitializeClasses("classes/server", funeral.sides.SERVER)
 
 /**
     * InitializeLibraries
@@ -173,9 +185,9 @@ function funeral.loader:InitializeLibraries(path, side)
     end
 end
 
-funeral.loader:InitializeLibraries("libraries/client", "cl")
-funeral.loader:InitializeLibraries("libraries/shared", "sh")
-funeral.loader:InitializeLibraries("libraries/server", "sv")
+funeral.loader:InitializeLibraries("libraries/client", funeral.sides.CLIENT)
+funeral.loader:InitializeLibraries("libraries/shared", funeral.sides.SHARED)
+funeral.loader:InitializeLibraries("libraries/server", funeral.sides.SERVER)
 
 /**
     * InitializeSystems
@@ -217,7 +229,7 @@ function funeral.loader:InitializeSystems(path)
                 return logger.Error("System \"" + name + "\" tried to include non-exist file \"" + current_path + "\"")
             end
 
-            funeral.loader:Include(current_path)
+            self:Include(current_path)
         end)
     end)
 end

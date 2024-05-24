@@ -105,7 +105,7 @@ function class:Send()
         method = self.method,
         success = self.callback,
         failed = self.callback,
-        body = self.type == MIME_TYPES.JSON and type(self.body) == "table" and util.JSONToTable(self.body) or self.body
+        body = self.type == MIME_TYPES.JSON and type(self.body) == "table" and util.JSONToTable(self.body) or self.body,
         type = self.type + "; charset=utf-8",
         timeout = 30,
         headers = headers
