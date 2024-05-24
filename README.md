@@ -14,7 +14,7 @@ Will be write soon
 
 # Contributing
 Feel free to submit a pull request with your changes/fixes,\
-but keep in mind that your changes should be in line with our [code writing guidelines](Code-writing-guidelines).
+but keep in mind that your changes should be in line with our [code writing guidelines](#Code-writing-guidelines).
 
 # 𐕣 PHONK SILA ⁶⁶⁶
 [![PHONK SILA](https://img.youtube.com/vi/cjAO7Y5WmwM/0.jpg)](https://www.youtube.com/watch?v=cjAO7Y5WmwM)
