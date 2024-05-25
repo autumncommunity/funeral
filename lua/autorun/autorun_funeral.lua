@@ -8,7 +8,7 @@
 
 funeral = {}
 funeral.authors = {"smokingplaya"}
-funeral.version = "1.0.3"
+funeral.version = "1.0.4"
 
 /**
   * Loader
@@ -189,7 +189,7 @@ funeral.loader:InitializeLibraries("libraries/client", funeral.sides.CLIENT)
 funeral.loader:InitializeLibraries("libraries/shared", funeral.sides.SHARED)
 funeral.loader:InitializeLibraries("libraries/server", funeral.sides.SERVER)
 
-version_checker.Validate("autumncommunity", "funeral", "master", funeral.version)
+version_checker:Validate("autumncommunity", "funeral", "master", funeral.version)
 
 /**
     * InitializeSystems

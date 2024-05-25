@@ -9,5 +9,9 @@ function string_mt:__add(str)
 end
 
 function string.json(self)
-  return util.JSONToTable(self)
+    return util.JSONToTable(self)
+end
+
+function string.UpperFirst(self)
+    return self:sub(1, 1):upper() .. self:sub(2)
 end

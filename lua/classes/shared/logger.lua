@@ -17,15 +17,15 @@ local COLOR_YELLOW = class.static.COLOR_YELLOW
 local COLOR_RED = class.static.COLOR_RED
 
 function class.static.Info(message)
-    MsgC(color_white, getTimeStamp(), COLOR_BLUE, " [INFO] ", COLOR_GREY, tostring(message), "\n")
+    MsgC(COLOR_GREY, getTimeStamp(), COLOR_BLUE, " INFO ", color_white, tostring(message), "\n")
 end
 
 function class.static.Warning(message)
-    MsgC(color_white, getTimeStamp(), COLOR_YELLOW, " [WARN] ", COLOR_GREY, tostring(message), "\n")
+    MsgC(COLOR_GREY, getTimeStamp(), COLOR_YELLOW, " WARN ", color_white, tostring(message), "\n")
 end
 
 function class.static.Error(message)
-    MsgC(color_white, getTimeStamp(), COLOR_RED, " [ERR] ", COLOR_GREY, tostring(message), "\n")
+    MsgC(COLOR_GREY, getTimeStamp(), COLOR_RED, " ERR ", color_white, tostring(message), "\n")
 end
 
 return class
