@@ -62,7 +62,11 @@ end
 
 function class:Open(parent)
     if IsValid(self.panel) then
-        self.panel[self.isSave and "Show" or "Remove"](self.panel)
+        if self.isSave then
+            return self.panel:Show()
+        end
+
+        self.panel:Remove()
     end
 
     self.panel = vgui.Create("DHTML", parent)
