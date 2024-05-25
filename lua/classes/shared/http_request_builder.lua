@@ -17,6 +17,7 @@ function class:new(url, method)
         return
     end
 
+    self.HTTP = HTTP
     self.headers = {}
     self.url = url
     self.method = METHODS[method]
@@ -105,7 +106,7 @@ function class:Send()
         method = self.method,
         success = self.callback,
         failed = self.callback,
-        body = self.type == MIME_TYPES.JSON and type(self.body) == "table" and util.JSONToTable(self.body) or self.body,
+        body = self.type == MIME_TYPES.JSON and type(self.body) == "table" and util.TableToJSON(self.body) or self.body,
         type = self.type + "; charset=utf-8",
         timeout = 30,
         headers = headers

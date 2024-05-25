@@ -50,15 +50,15 @@ function class:SetError(error)
 end
 
 function class:IsError()
-    return self.error != ""
-end
-
-function class:IsSuccess()
-    return self.error == ""
+    return self.error != "" || self.isClientError || self.isServerError
 end
 
 function class:GetError()
     return self.error
+end
+
+function class:IsSuccess()
+    return self.error == ""
 end
 
 /* Response code */

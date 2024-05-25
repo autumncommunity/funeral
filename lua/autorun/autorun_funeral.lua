@@ -189,6 +189,8 @@ funeral.loader:InitializeLibraries("libraries/client", funeral.sides.CLIENT)
 funeral.loader:InitializeLibraries("libraries/shared", funeral.sides.SHARED)
 funeral.loader:InitializeLibraries("libraries/server", funeral.sides.SERVER)
 
+version_checker.Validate("autumncommunity", "funeral", "master", funeral.version)
+
 /**
     * InitializeSystems
     * * Includes all systems, that "path" folder contains
