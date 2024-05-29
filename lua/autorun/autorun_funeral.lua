@@ -122,6 +122,11 @@ function funeral.loader:InitializeClasses(path, side)
 
     for _, filename in ipairs(files) do
         local class = self.includes[side](class_folder .. filename)
+
+        if not class then
+            continue
+        end
+
         local class_name = class.name
 
         if !class or !class_name then
