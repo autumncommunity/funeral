@@ -23,7 +23,9 @@ function bind:UnRegister(button, id)
 end
 
 hook.Add("PlayerButtonUp", "funeral.binds", function(pl, button)
-    if not IsFirstTimePredicted() then return end
+    if not IsFirstTimePredicted() then
+        return
+    end
 
     local binds = bind.binds[button]
 
