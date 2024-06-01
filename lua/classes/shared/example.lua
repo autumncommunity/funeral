@@ -9,6 +9,7 @@ function class:new()
 end
 
 /* static method */
+
 function class.static.BuyMeABeer()
     print("Example print")
 end
